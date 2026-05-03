@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airbnb NYC — Exploratory Data Analysis</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="badge">Data Analysis Project</div>
+    <h1>Airbnb NYC — EDA</h1>
+    <p class="subtitle">
+      Exploratory analysis of 97,774 New York City Airbnb listings —
+      cleaning, statistics, and 8 visualisation charts.
+    </p>
+  </header>
+
+  <!-- ===== Nav ===== -->
+  <nav>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#cleaning">Cleaning</a></li>
+      <li><a href="#stats">Statistics</a></li>
+      <li><a href="#charts">Charts</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#tech">Tech</a></li>
+    </ul>
+  </nav>
+
+  <!-- ===== Main ===== -->
+  <main>
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2><span class="icon">📋</span> Project Overview</h2>
+      <p style="color:var(--clr-muted); max-width:720px;">
+        This project loads the raw <strong>Airbnb Open Data</strong> Excel file, applies
+        a multi-step cleaning pipeline, computes summary statistics, and generates
+        8 charts that reveal pricing patterns, neighbourhood distributions, and
+        correlations across the NYC listings dataset.
+      </p>
+    </section>
+
+    <!-- Cleaning -->
+    <section id="cleaning">
+      <h2><span class="icon">🧹</span> Data Cleaning Steps</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Step</th>
+              <th>Action</th>
+              <th>Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Column normalisation</td>
+              <td>Strip whitespace · lowercase · replace spaces with <code>_</code></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Typo fixes</td>
+              <td><code>"brookln"</code> → Brooklyn · <code>"manhatan"</code> → Manhattan</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Drop unused column</td>
+              <td><code>license</code> column removed</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Remove duplicates</td>
+              <td>541 exact duplicate rows dropped</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Drop nulls</td>
+              <td>Rows missing <code>price</code>, <code>neighbourhood_group</code>, or <code>room_type</code> removed</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Filter invalid prices</td>
+              <td>Kept only <code>price &gt; 0</code></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Filter minimum_nights</td>
+              <td>Kept values between 1 and 365</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Filter availability_365</td>
+              <td>Kept values between 0 and 365</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="stats">
+      <h2><span class="icon">📊</span> Price Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="value">97,774</div>
+          <div class="label">Total Listings</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$625.82</div>
+          <div class="label">Mean Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$626.00</div>
+          <div class="label">Median Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$331.69</div>
+          <div class="label">Std Deviation</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$50.00</div>
+          <div class="label">Minimum Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$1,200.00</div>
+          <div class="label">Maximum Price</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$340.00</div>
+          <div class="label">25th Percentile</div>
+        </div>
+        <div class="stat-card">
+          <div class="value">$913.00</div>
+          <div class="label">75th Percentile</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section id="charts">
+      <h2><span class="icon">🖼️</span> Charts</h2>
+      <div class="charts-grid">
+
+        <div class="chart-card">
+          <img src="images/listings_by_group.png" alt="Listings by Neighbourhood Group" />
+          <div class="chart-info">
+            <div class="chart-title">Listings by Neighbourhood Group</div>
+            <div class="chart-desc">Count plot showing number of listings per NYC borough</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/room_type_distribution.png" alt="Room Type Distribution" />
+          <div class="chart-info">
+            <div class="chart-title">Room Type Distribution</div>
+            <div class="chart-desc">Breakdown of entire home, private room, and shared room listings</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/avg_price_by_group.png" alt="Average Price by Neighbourhood Group" />
+          <div class="chart-info">
+            <div class="chart-title">Average Price by Neighbourhood Group</div>
+            <div class="chart-desc">Bar chart of mean price across NYC boroughs</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/price_distribution.png" alt="Price Distribution" />
+          <div class="chart-info">
+            <div class="chart-title">Price Distribution (under $1,500)</div>
+            <div class="chart-desc">Histogram with KDE curve for listing prices</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/price_by_room_type.png" alt="Price by Room Type" />
+          <div class="chart-info">
+            <div class="chart-title">Price by Room Type</div>
+            <div class="chart-desc">Box plot comparing price spread across room types</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/top10_neighbourhoods.png" alt="Top 10 Neighbourhoods" />
+          <div class="chart-info">
+            <div class="chart-title">Top 10 Neighbourhoods</div>
+            <div class="chart-desc">Horizontal bar chart of the most listed neighbourhoods</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/reviews_vs_price.png" alt="Reviews vs Price" />
+          <div class="chart-info">
+            <div class="chart-title">Number of Reviews vs Price</div>
+            <div class="chart-desc">Scatter plot coloured by room type (3,000-row sample)</div>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <img src="images/heatmap.png" alt="Correlation Heatmap" />
+          <div class="chart-info">
+            <div class="chart-title">Correlation Heatmap</div>
+            <div class="chart-desc">Pearson correlation matrix of all numeric columns</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Pipeline -->
+    <section id="pipeline">
+      <h2><span class="icon">⚙️</span> Pipeline</h2>
+      <div class="pipeline">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3>Load</h3>
+            <p>Read <code style="color:var(--clr-accent)">Airbnb_Open_Data.xlsx</code> with pandas — 102,599 rows × 26 columns</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3>Clean</h3>
+            <p>Normalise columns, fix typos, remove duplicates and nulls, filter outliers</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3>Analyse</h3>
+            <p>Compute descriptive statistics on the cleaned 97,774-row dataframe</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3>Visualise</h3>
+            <p>Generate 8 seaborn / matplotlib charts and save to <code style="color:var(--clr-accent)">images/</code> at 120 DPI</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h3>Export</h3>
+            <p>Save cleaned dataframe as <code style="color:var(--clr-accent)">airbnb_cleaned.csv</code></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech -->
+    <section id="tech">
+      <h2><span class="icon">🛠️</span> Libraries Used</h2>
+      <div class="tech-list">
+        <div class="tech-badge"><span class="dot"></span>pandas</div>
+        <div class="tech-badge"><span class="dot"></span>matplotlib</div>
+        <div class="tech-badge"><span class="dot"></span>seaborn</div>
+        <div class="tech-badge"><span class="dot"></span>openpyxl</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>Airbnb Open Data — Exploratory Data Analysis · Event Data Analysis Project</p>
+  </footer>
+
+</body>
+</html>
